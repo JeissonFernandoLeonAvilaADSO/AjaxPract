@@ -1,0 +1,144 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --primary-color: aqua;
+    --secondary-color: black;
+    --third-color: purple;
+    --font-color: white;
+}
+
+body{
+    display: grid;
+    grid-template-columns: 35% 1fr;
+    grid-template-rows: auto;
+    background-color: var(--secondary-color);
+    color: var(--font-color);
+    width: calc(100%);
+    height: 60vw;
+    flex-direction: column;
+}
+
+.body-2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formulario{
+    width: auto;
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    margin: 1rem;
+}
+
+.formulario__formInput{
+    margin: 0 1rem 1rem 1rem;
+    padding: 0.2rem;
+    background-color: var(--secondary-color);
+    color: var(--font-color);
+    width: 90%;
+    transition: 0.5s;
+}
+
+.formulario__formLabel{
+    color: var(--font-color);
+    margin: 1rem 1rem 0 1rem;
+    width: 90%;
+}
+
+.formulario__formButton{
+    background-color: var(--secondary-color);
+    border: 1px solid var(--primary-color);
+    color: var(--font-color);
+    cursor: pointer;
+    padding: 1rem;
+    transition: 0.5s;
+    width: calc(98.5%);
+    height: 3.5rem;
+    grid-column: 1 / 3;
+    justify-self: center;
+}
+
+.formulario__formButton:hover{
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.formulario__formInput:focus{
+    border-bottom: 1px solid var(--primary-color);
+    outline: none;
+}
+
+.formulario__formInput--CheckBoxMod{
+    display: flex;
+    justify-self: start;
+}
+
+.tabla{
+    height: auto;
+    border-collapse: collapse;
+    margin: 1rem;
+}
+
+.tabla > thead{
+    color: var(--third-color);
+    background-color: var(--primary-color);
+}
+
+.tabla > thead > tr > th {
+    text-align: start;
+    padding: 0 0.5rem;
+}
+
+.tabla > tbody > tr {
+    border-bottom: 1px solid var(--primary-color);
+}
+
+.tabla > tbody > tr:hover {
+    background-color: var(--primary-color);
+    color: var(--third-color);
+}
+
+.tabla > tbody > tr > td {
+    padding: 0 0.5rem;
+    transition: 0.3s;
+}
+
+.tabla > tbody > tr > td:hover {
+    background-color: var(--third-color);
+    border: 1px solid var(--third-color);
+    color: var(--font-color);
+    cursor: default;
+    scale: 1.1;
+}
+
+.error{
+    border: solid 2px red;
+}
+
+.correcto{
+    border: solid 2px var(--primary-color);
+}
+
+.disabled{
+    background-color: gray;
+}
+
+.uncheck{
+    background-color: var(--third-color);
+}
+
+
+.blanco{
+    background-color: white;
+}

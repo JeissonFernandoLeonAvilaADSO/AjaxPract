@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD</title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+
+    <form class="formulario" id="form" novalidate>
+        <label class="formulario__formLabel" for="Nombre">Nombre</label>
+        <input class="formulario__formInput" type="text" name="Nombre" id="Nombre" autocomplete="off" required>
+
+        <label class="formulario__formLabel" for="Apellido">Apellido</label>
+        <input class="formulario__formInput" type="text" name="Apellido" id="Apellido" autocomplete="off" required>
+
+        <label class="formulario__formLabel" for="Direccion">Direccion</label>
+        <input class="formulario__formInput" type="text" name="Direccion" id="Direccion" autocomplete="off" required>
+
+        <label class="formulario__formLabel" for="Tell">Télefono</label>
+        <input class="formulario__formInput" type="text" name="Telefono" id="Tell" autocomplete="off" required>
+
+        <label class="formulario__formLabel" for="Correo">Correo</label>
+        <input class="formulario__formInput" type="email" name="Correo" id="Correo" autocomplete="off" required>
+
+        <label class="formulario__formLabel" for="Documento">Documento</label>
+        <input class="formulario__formInput" type="text" name="Documento" id="Documento" autocomplete="off" required>
+        
+        <label class="formulario__formLabel" for="politicas">Politicas</label>
+        <input class="formulario__formInput formulario__formInput--CheckBoxMod" type="checkbox" name="politicas" id="Politicas">
+        <button class="formulario__formButton" type="submit" id="Boton">Enviar</button>
+    </form>
+
+    <template id="FirstTableTempate">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </template>
+
+    <a href="/AgregarDoc/AgregarDoc.html" class="formulario__formButton">Agregar Documento</a>
+    <script src="app.js" type="module"></script>
+</body>
+</html>
