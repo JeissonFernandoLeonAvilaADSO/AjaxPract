@@ -24,4 +24,22 @@ export async function enviarDatos(ListaSelectores) {
       console.error('Error al enviar los datos:', error);
     }
   }
+
+export async function traerDatos(id) {
+  try {
+
+  const response = await fetch('http://localhost:3000/users/' + id, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8'
+    }
+  }).then(dt => console.log(dt))
+  
+  
+} catch (error) {
+  console.error('Error al enviar los datos:', error);
+}
+
+
+}
   

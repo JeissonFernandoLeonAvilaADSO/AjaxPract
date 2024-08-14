@@ -14,7 +14,7 @@ export async function Select() {
 
     for (let i = 0; i < TiposDocs.length; i++) {
       const option = document.createElement('option');
-      option.value = TiposDocs[i].tipoDoc;
+      option.value = TiposDocs[i].id;
       option.textContent = TiposDocs[i].tipoDoc;
       select.appendChild(option);
     }
