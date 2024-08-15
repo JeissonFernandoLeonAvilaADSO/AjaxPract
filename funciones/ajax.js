@@ -33,13 +33,55 @@ export async function traerDatos(id) {
     headers: {
       'Content-Type': 'application/json; charset=UTF-8'
     }
-  }).then(dt => console.log(dt))
+  })
+  const data = await response.json()
+  return data
   
-  
-} catch (error) {
-  console.error('Error al enviar los datos:', error);
+  } catch (error) {
+    console.error('Error al traer los datos:', error);
+  }
 }
 
+export async function EditarDatos(id, datos) {
+  try {
 
+    const response = await fetch('http://localhost:3000/users/' + id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+      body: JSON.stringify(datos)
+    })
+
+    if (response.ok) {
+      alert(`datos del usuario ${datos.Nombre} fueron actualizados correctamente`)
+    } else {
+      alert(`Hubo un error al modificar los datos del usuario ${datos.Nombre}`)
+    }
+
+  } catch (error) {
+    console.error(error);
+    
+  }
+}
+
+export async function BorrarDatos(id) {
+  try {
+    const response = await fetch('http://localhost:3000/users/' + id, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8'
+        }
+    })
+
+    if(response.ok){
+      alert(`Usuario con id ${id} eliminado correctamente`)
+    } else {
+      alert(`Hubo un error al eliminar el usuario con id ${id}`)
+    }
+  } catch (error) {
+    console.error(error);
+    
+  }
 }
   

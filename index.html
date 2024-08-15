@@ -30,8 +30,8 @@
         <label class="formulario__formLabel" for="politicas">Politicas</label>
         <input class="formulario__formInput formulario__formInput--CheckBoxMod" type="checkbox" name="politicas" id="Politicas">
         <button class="formulario__formButton" type="submit" id="Boton">Enviar</button>
+        <button class="formulario__formButton" type="reset" id="Limpiar">Limpiar</button>
     </form>
-
     <template id="FirstTableTempate">
         <table>
             <thead>
@@ -62,6 +62,10 @@
             </tbody>
         </table>
     </template>
+    <div class="PaginateContainer">
+        <button class="PaginateContainer__formButton" id="Paginate1"><img src="icons/FlechaIzquierda.svg"></button>
+        <button class="PaginateContainer__formButton" id="Paginate2"><img src="icons/FlechaDerecha.svg"></button>
+    </div>
 
     <a href="/AgregarDoc/AgregarDoc.html" class="formulario__formButton">Agregar Documento</a>
     <script src="app.js" type="module"></script>
