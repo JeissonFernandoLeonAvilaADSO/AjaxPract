@@ -13,7 +13,7 @@ export function crearFila(item, keys, dataTipoDoc) {
             cell.textContent = item[key];
         }
         row.appendChild(cell);
-    });
+    })
 
     let btnMod = BotonMod('../icons/BuscarIcon.svg', item.id, 0);
     let btnDel = BotonMod('../icons/BorrarIcon.svg', item.id, 1);

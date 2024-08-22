@@ -6,9 +6,14 @@ import { validar } from "./funciones/validar.js";
 import { validacion } from "./funciones/validacion.js";
 import { enviarDatos } from "./funciones/ajax.js";
 import { Select } from "./funciones/select.js";
-import { createTable } from "./ListarUsuarios/tb.js";
+import { createTable, consultaPag } from "./ListarUsuarios/tb.js";
 import { crearFila } from "./ListarUsuarios/crearFila.js";
 import { EditarDatos } from "./funciones/ajax.js";
+import { desHabilitarBoton, 
+    habilitarBotn, 
+    cambiarEstados, 
+    uncheckBoton, 
+    checkBoton } from "./funciones/estadosBotones.js";
 
 const $formulario = document.querySelector('#form');
 const $nombre = document.querySelector('#Nombre');
@@ -22,35 +27,12 @@ const $checkBox = document.querySelector('#Politicas');
 const $limpiar = document.querySelector('#Limpiar');
 const $pag1 = document.querySelector('#Paginate1');
 const $pag2 = document.querySelector('#Paginate2');
+const $primPag = document.querySelector('#Primera');
+const $ultPag = document.querySelector('#Ultima');
 
 let pagina = 1;
 
 let $ListaSelectores = document.querySelectorAll('form[novalidate] > *[required]')
-
-async function modif() {
-    const miSelect = await Select();
-    let $selector = miSelect.querySelector('select');
-    $telefono.parentNode.insertBefore(miSelect, $telefono.nextSibling);
-    $ListaSelectores = [...$ListaSelectores, $selector]
-    console.log($selector);
-    
-    $ListaSelectores.forEach((selector) => {
-        selector.classList.add('uncheck');
-        $submitButton.classList.add('uncheck');
-        $submitButton.setAttribute('disabled', '');
-        selector.disabled = true;
-    })
-
-    $ListaSelectores.forEach((campo) => {
-        campo.addEventListener('blur', (evt) => validacion(evt, campo));
-    });
-
-    let $table = await createTable(1);
-    console.log($table);
-    $formulario.parentNode.insertBefore($table, $formulario.nextElementSibling)
-
-}
-modif();
 
 let data = {
     "id": null,
@@ -63,15 +45,43 @@ let data = {
     "Tipo de Documento": null
 };
 
-
 let keys = Object.keys(data);
 let rpTipoDoc = await fetch('http://localhost:3000/TipoDocData');
 let dataTipoDoc = await rpTipoDoc.json();
 
+
+async function modif() {
+    const miSelect = await Select();
+    let $selector = miSelect.querySelector('select');
+    $telefono.parentNode.insertBefore(miSelect, $telefono.nextSibling);
+    $ListaSelectores = [...$ListaSelectores, $selector]
+    console.log($selector);
+    
+    $ListaSelectores.forEach((selector) => {
+        uncheckBoton(selector)
+    })
+    
+    $ListaSelectores.forEach((campo) => {
+        campo.addEventListener('blur', (evt) => validacion(evt, campo));
+    });
+    
+    uncheckBoton($submitButton)
+
+    desHabilitarBoton($pag1)
+    desHabilitarBoton($primPag)
+
+    let $table = await createTable(1);
+    console.log($table);
+    $formulario.parentNode.insertBefore($table, $formulario.nextElementSibling)
+
+}
+modif();
+
+
 $formulario.addEventListener('submit', async (e) => {
     e.preventDefault();
-    $submitButton.setAttribute('disabled', '');
-    $submitButton.classList.add('uncheck');
+    uncheckBoton($submitButton)
+    
     let validacion = await validar(e, $ListaSelectores)
     console.log(1);
     console.log(validacion);
@@ -93,8 +103,9 @@ $formulario.addEventListener('submit', async (e) => {
             console.log(2);
         }
 
-        $submitButton.classList.remove('uncheck');
-        $submitButton.removeAttribute('disabled', '');
+        checkBoton($submitButton)
+
+
         $ListaSelectores.forEach((selector) => {
             selector.value = ''
         })
@@ -104,8 +115,7 @@ $formulario.addEventListener('submit', async (e) => {
         
     } else {
         console.log(3);
-        $submitButton.classList.remove('uncheck');
-        $submitButton.removeAttribute('disabled', '');
+        checkBoton($submitButton)
     }
 });
 
@@ -140,18 +150,80 @@ $limpiar.addEventListener('click', (e) => {
     
 })
 
+
 $pag1.addEventListener('click', async (e) => {
     document.querySelector('table').remove();
-    if(pagina < 1){
+    const rpPag = await consultaPag(pagina);
+
+    if(pagina > rpPag.first){
         pagina -= 1;
     }
     let $table = await createTable(pagina);
     $formulario.parentNode.insertBefore($table, $formulario.nextElementSibling);
+
+    console.log([rpPag.prev, rpPag.next]);
+    if(rpPag.prev === null){
+        desHabilitarBoton($pag1)
+        desHabilitarBoton($primPag)
+    } else {
+        habilitarBotn($pag1)
+        habilitarBotn($pag2)
+        habilitarBotn($ultPag)
+    }
 })
 
 $pag2.addEventListener('click', async (e) => {
     document.querySelector('table').remove();
-    pagina += 1;
+    const rpPag = await consultaPag(pagina);
+
+    if (pagina < rpPag.last){
+        pagina += 1;
+    }
+
     let $table = await createTable(pagina);
     $formulario.parentNode.insertBefore($table, $formulario.nextElementSibling);
+
+    console.log([rpPag.prev, rpPag.next]);
+    
+    if(rpPag.next === null){
+        desHabilitarBoton($pag2)
+        desHabilitarBoton($ultPag)
+    } else {
+        habilitarBotn($pag1)
+        habilitarBotn($pag2)
+        habilitarBotn($primPag)
+    }
+})
+
+
+$primPag.addEventListener('click', async (e) => {
+    document.querySelector('table').remove();
+    const rpPag = await consultaPag(pagina);
+
+    pagina = rpPag.first
+
+    let $table = await createTable(pagina);
+    $formulario.parentNode.insertBefore($table, $formulario.nextElementSibling);
+
+    console.log(pagina);
+    
+    cambiarEstados($pag2, $pag1)
+    cambiarEstados($ultPag, $primPag)
+})
+
+
+$ultPag.addEventListener('click', async (e) => {
+    document.querySelector('table').remove();
+    const rpPag = await consultaPag(pagina);
+
+    pagina = rpPag.last
+
+    let $table = await createTable(pagina);
+    $formulario.parentNode.insertBefore($table, $formulario.nextElementSibling);
+
+    console.log([rpPag.prev, rpPag.next]);
+
+    cambiarEstados($pag1, $pag2)
+    cambiarEstados($primPag, $ultPag)
+
 })

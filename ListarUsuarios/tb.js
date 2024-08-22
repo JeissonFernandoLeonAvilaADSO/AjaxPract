@@ -32,6 +32,13 @@ export async function createTable(page) {
     return fragment;
 }
 
+export async function consultaPag(page) {
+    let response = await fetch('http://localhost:3000/users?_page=' + page);
+    let rp = await response.json();
+    const {data, ...PagData} = rp
+    return PagData;
+}
+
 
 
   

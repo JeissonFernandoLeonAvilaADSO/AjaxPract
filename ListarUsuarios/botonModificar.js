@@ -10,7 +10,17 @@ export default function BotonMod(url, id, tp){
 
     if (tp === 1){
         btn.classList.add('formulario__formButton--borrarBtn')
+        btn.addEventListener('click', async (e)=> {
+            const data = await traerDatos(id)
+            console.log(data);
+                const des = confirm(`¿Esta seguro de eliminar el usuario?`)
+                if (des) {
+                    BorrarDatos(id)
+                    document.getElementById(`${id}`).remove()
+                }
+        })
     }
+
 
     btn.addEventListener('click', async (e)=> {
         const data = await traerDatos(id)
@@ -38,6 +48,7 @@ export default function BotonMod(url, id, tp){
             console.log('Boton no encontrado')
         }
     })
+
 
     return btn
 }
